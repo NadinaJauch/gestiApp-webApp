@@ -1,0 +1,20 @@
+.activeElement {
+    background-color:rgba(0, 0, 0, 0.124);
+    color:white;
+}
+.activeElement:hover{
+    color:white;
+}
+.inactiveElement{
+color:rgb(106, 106, 106);
+}
+
+.inactiveElement:hover {
+background-color:rgba(0, 0, 0, 0.124);
+color:white;
+} 
+
+.card-balance {
+    width:80%;
+    margin-right:20px;
+}
