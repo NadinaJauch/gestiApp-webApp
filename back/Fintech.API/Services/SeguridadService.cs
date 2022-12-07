@@ -20,19 +20,23 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-
+using AutoMapper;
 
 namespace Services
 {
-    internal class SeguridadService : ISeguridadService
+    public class SeguridadService : ISeguridadService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
+        private readonly IPasswordService _passwordService;
+        private readonly IMapper _mapper;
 
-        public SeguridadService(IUnitOfWork unitOfWork, IConfiguration configuration)
+        public SeguridadService(IUnitOfWork unitOfWork, IConfiguration configuration, IMapper mapper, IPasswordService passwordService)
         {
             _unitOfWork = unitOfWork;
             _configuration = configuration;
+            _mapper = mapper;
+            _passwordService = passwordService;
         }
 
         public async Task<Usuario> GetLoginByCredentials(Usuario usuario)
@@ -43,7 +47,7 @@ namespace Services
         public async Task<string> LoginAsync(SeguridadDto loginDto)
         {
            var user =  await _unitOfWork.SeguridadRepository.getUserWithMail(loginDto.Mail);
-            if ((user.Mail == loginDto.Mail) && (user.Password == loginDto.Password))
+            if ((user.Mail.ToLower() == loginDto.Mail.ToLower()) && (user.Password == loginDto.Password))
             {
                 var authClaims = new List<Claim>
             {
@@ -66,10 +70,24 @@ namespace Services
             return null;
         }
 
-        public async Task RegisterUser(Usuario usuario)
+        public async Task RegisterUser(UsuarioRegisterDTO usuarioDTO)
         {
-            await _unitOfWork.SeguridadRepository.Add(usuario);
-            await _unitOfWork.SaveChangesAsync();
+            Usuario usuario = new Usuario();
+            usuario.FirstName = usuarioDTO.FirstName;
+            usuario.LastName = usuarioDTO.LastName;
+            usuario.Mail = usuarioDTO.Mail;
+            usuario.Password = _passwordService.Hash(usuarioDTO.Password);
+            usuario.DateJoined = DateTime.Now;
+            usuario.LastLogin = DateTime.Now;
+
+            try
+            {
+                await _unitOfWork.SeguridadRepository.Add(usuario);
+                await _unitOfWork.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

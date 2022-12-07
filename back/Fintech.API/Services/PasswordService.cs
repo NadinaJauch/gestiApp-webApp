@@ -43,18 +43,14 @@ namespace Services
 
         public string Hash(string password)
         {
-            //PBKDF2 implementation
-            using (var algorithm = new Rfc2898DeriveBytes(
-                password,
-                _options.SaltSize,
-                _options.Iterations
-                ))
+            var crypt = new SHA256Managed();
+            var hash = new StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(password));
+            foreach (byte theByte in crypto)
             {
-                var key = Convert.ToBase64String(algorithm.GetBytes(_options.KeySize));
-                var salt = Convert.ToBase64String(algorithm.Salt);
-
-                return $"{_options.Iterations}.{salt}.{key}";
+                hash.Append(theByte.ToString("x2"));
             }
+            return hash.ToString();
         }
     }
 }

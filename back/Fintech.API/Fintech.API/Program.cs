@@ -3,6 +3,7 @@ using Abstractions.IServices;
 using db.Models;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Repositories.Repositories;
 using Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMovimientosRepository<Movimiento>, MovimientosRepository>();
 builder.Services.AddTransient<IMovimientosService, MovimientosService>();
+builder.Services.AddTransient<ISeguridadService, SeguridadService>();
+builder.Services.AddTransient<IPasswordService, PasswordService>();
+builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build(); 
 

@@ -12,7 +12,7 @@ namespace Abstractions.IServices
     {
 
         public Task<Usuario> GetLoginByCredentials(Usuario usuario);
-        public Task RegisterUser(Usuario usuario);
+        public Task RegisterUser(UsuarioRegisterDTO usuarioDTO);
         public Task<string> LoginAsync(SeguridadDto loginDTO);
     }
 }

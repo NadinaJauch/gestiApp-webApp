@@ -27,14 +27,17 @@ namespace Fintech.API.Controllers
         [HttpPost("registrarse")]
         public async Task<IActionResult> Post(UsuarioRegisterDTO usuarioDTO)
         {
-            var security = _mapper.Map<Usuario>(usuarioDTO);
+            try
+            {
+               await _seguridadService.RegisterUser(usuarioDTO);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+                throw;
+            }
 
-            security.Password = _passwordService.Hash(security.Password);
-            await _seguridadService.RegisterUser(security);
-            security.DateJoined = DateTime.Now;
-            security.LastLogin = DateTime.Now;
-            usuarioDTO = _mapper.Map<UsuarioRegisterDTO>(security);
-            return Ok(security);
         }
 
         [HttpPost("login")]
