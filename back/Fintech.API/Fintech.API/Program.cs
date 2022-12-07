@@ -17,7 +17,7 @@ builder.Services.AddDbContext<GestionAhorrosContext>(options =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IMovimientosRepository, MovimientosRepository>();
+builder.Services.AddScoped<IMovimientosRepository<Movimiento>, MovimientosRepository>();
 builder.Services.AddTransient<IMovimientosService, MovimientosService>();
 
 var app = builder.Build(); 

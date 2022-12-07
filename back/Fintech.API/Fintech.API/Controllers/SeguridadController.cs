@@ -24,16 +24,31 @@ namespace Fintech.API.Controllers
             _passwordService= passwordService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(SeguridadDto securityDto)
+        [HttpPost("registrarse")]
+        public async Task<IActionResult> Post(UsuarioRegisterDTO usuarioDTO)
         {
-            var security = _mapper.Map<Usuario>(securityDto);
+            var security = _mapper.Map<Usuario>(usuarioDTO);
 
             security.Password = _passwordService.Hash(security.Password);
             await _seguridadService.RegisterUser(security);
+            security.DateJoined = DateTime.Now;
+            security.LastLogin = DateTime.Now;
+            usuarioDTO = _mapper.Map<UsuarioRegisterDTO>(security);
+            return Ok(security);
+        }
 
-            securityDto = _mapper.Map<SeguridadDto>(security);
-            return Ok(securityDto);
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] SeguridadDto LoginDTO)
+        {
+            //hash password
+            LoginDTO.Password = _passwordService.Hash(LoginDTO.Password);
+            //mando validación y pido token
+            var resultado = await _seguridadService.LoginAsync(LoginDTO);
+            if (string.IsNullOrEmpty(resultado))
+            {
+                return Unauthorized();
+            }
+            return Ok(resultado);
         }
 
     }

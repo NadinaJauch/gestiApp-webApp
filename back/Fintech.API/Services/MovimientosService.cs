@@ -7,8 +7,8 @@ namespace Services
 {
     public class MovimientosService : IMovimientosService
     {
-        private readonly IMovimientosRepository _movimientosRepository;
-        public MovimientosService(IMovimientosRepository movimientosRepository)
+        private readonly IMovimientosRepository<Movimiento> _movimientosRepository;
+        public MovimientosService(IMovimientosRepository<Movimiento> movimientosRepository)
         {
             _movimientosRepository = movimientosRepository;
         }
@@ -21,7 +21,6 @@ namespace Services
         public async Task AddMovimiento(AddMovimientoDTO movimientoDTO)
         {
             Movimiento movimiento = new Movimiento();
-
             movimiento.Total = movimientoDTO.Total;
             movimiento.Tipo = movimientoDTO.Tipo;
             movimiento.Hora = movimientoDTO.Hora;
@@ -30,7 +29,7 @@ namespace Services
             movimiento.MedioPago = movimientoDTO.MedioPago;
             movimiento.TipoDetalle = movimientoDTO.TipoDetalle;
 
-            await _movimientosRepository.Post(movimiento);
+            await _movimientosRepository.Add(movimiento);
 
         }
     }

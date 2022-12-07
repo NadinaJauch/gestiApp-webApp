@@ -1,2 +1,2 @@
-# gestiApp-webApp
-Aplicación de gestión de ahorros creada con .NET Core y React
+# c8-02-m-csharp
+Proyecto de tipo fintech para gestionar ahorros

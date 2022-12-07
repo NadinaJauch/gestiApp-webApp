@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Views.DTOs;
 
 namespace Abstractions.IServices
 {
@@ -13,5 +13,6 @@ namespace Abstractions.IServices
 
         public Task<Usuario> GetLoginByCredentials(Usuario usuario);
         public Task RegisterUser(Usuario usuario);
+        public Task<string> LoginAsync(SeguridadDto loginDTO);
     }
 }

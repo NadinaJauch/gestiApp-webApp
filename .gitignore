@@ -1,0 +1,17 @@
+# Ignora las carpetas
+/front/gesti_app/node_modules
+/back/Fintech.API/.vs
+/back/Fintech.API/Abstractions/bin
+/back/Fintech.API/Abstractions/obj
+/back/Fintech.API/db/obj
+/back/Fintech.API/db/bin
+/back/Fintech.API/Fintech.API/bin
+/back/Fintech.API/Fintech.API/obj
+/back/Fintech.API/Repositories/obj
+/back/Fintech.API/Repositories/bin
+/back/Fintech.API/Services/bin
+/back/Fintech.API/Services/obj
+/back/Fintech.API/Views/bin
+/back/Fintech.API/Views/obj
+# Ignora archivo
+/front/gesti_app/package-lock.json

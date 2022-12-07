@@ -39,7 +39,7 @@ namespace Fintech.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddMovimientoDTO movimiento)
         {
-            _movimientosService.AddMovimiento(movimiento);
+            await _movimientosService.AddMovimiento(movimiento);
             return Ok();
         }
 

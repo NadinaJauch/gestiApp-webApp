@@ -17,5 +17,11 @@ namespace Repositories.Repositories
         {
             return await _entities.FirstOrDefaultAsync(x => x.Mail == login.Mail);
         }
+
+        public async Task<Usuario> getUserWithMail(string mail)
+        {
+            return await _entities.FirstOrDefaultAsync(x => x.Mail == mail);
+        }
+
     }
 }

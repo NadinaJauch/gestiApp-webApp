@@ -10,5 +10,6 @@ namespace Abstractions.IRepositories
     public interface ISeguridadRepository : IRepository<Usuario>
     {
         Task<Usuario> GetLoginByCredentials(Usuario login);
+        Task<Usuario> getUserWithMail(string mail);
     }
 }

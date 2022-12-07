@@ -6,27 +6,23 @@ using System.Threading.Tasks;
 using Abstractions.IRepositories;
 using db.Models;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Repositories;
 
 namespace Repositories
 {
-    public class MovimientosRepository : IMovimientosRepository
+    public class MovimientosRepository : BaseRepository<Movimiento>, IMovimientosRepository<Movimiento>
     {
-        private readonly GestionAhorrosContext _db;
-
-        public MovimientosRepository(GestionAhorrosContext db)
-        {
-            _db = db;
-        }
+        public MovimientosRepository(GestionAhorrosContext db) : base(db) { }
 
         public async Task<List<Movimiento>> Get()
         {
-            return await _db.Movimientos.ToListAsync();
+            return await _entities.ToListAsync();
         }
 
         public async Task Post(Movimiento movimiento)
         {
-            await _db.Movimientos.AddAsync(movimiento);
-            await _db.SaveChangesAsync();
+            await _entities.AddAsync(movimiento);
         }
+
     }
 }

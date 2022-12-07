@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "db", "db\db.csproj", "{1401
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{E23F02F8-E025-417F-BC14-462E4B71C603}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Views", "Views\Views.csproj", "{1A173D67-1D9A-4109-A183-9F4FA1AED515}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Views", "Views\Views.csproj", "{1A173D67-1D9A-4109-A183-9F4FA1AED515}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
