@@ -11,7 +11,7 @@ namespace Repositories.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly GestionAhorrosContext _db;
-        private readonly IRepository<Usuario> _usuarioRepository;
+        private readonly IUsuariosRepository _usuarioRepository;
         private readonly IRepository<Movimiento> _movimientoRepository;
         private readonly ISeguridadRepository _seguridadRepository;
 
@@ -20,10 +20,9 @@ namespace Repositories.Repositories
             _db = context;
         }
 
+        public IUsuariosRepository UsuariosRepository => _usuarioRepository ?? new UsuariosRepository(_db);
 
-        public IRepository<Usuario> UserRepository => _usuarioRepository ?? new BaseRepository<Usuario>(_db);
-
-        public IRepository<Movimiento> CommentRepository => _movimientoRepository ?? new BaseRepository<Movimiento>(_db);
+        //public IRepository<Movimiento> CommentRepository => _movimientoRepository ?? new BaseRepository<Movimiento>(_db);
 
         public ISeguridadRepository SeguridadRepository => _seguridadRepository ?? new SeguridadRepository(_db);
 
@@ -34,6 +33,7 @@ namespace Repositories.Repositories
                 _db.Dispose();
             }
         }
+
 
         public void SaveChanges()
         {

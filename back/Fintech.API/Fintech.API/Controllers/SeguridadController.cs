@@ -13,14 +13,14 @@ namespace Fintech.API.Controllers
     [Route("api/[controller]")]
     public class SeguridadController : ControllerBase
     {
-        private readonly ISeguridadService _seguridadService;
         private readonly IMapper _mapper;
+        private readonly ISeguridadService _seguridadService;
         private readonly IPasswordService _passwordService;
 
         public SeguridadController(ISeguridadService seguridadService, IMapper mapper,IPasswordService passwordService)
         {
-            _seguridadService= seguridadService; 
             _mapper= mapper;
+            _seguridadService= seguridadService; 
             _passwordService= passwordService;
         }
 

@@ -10,7 +10,7 @@ namespace Abstractions.IRepositories
 {
     public interface IUnitOfWork : IDisposable
     {
-
+        public IUsuariosRepository UsuariosRepository { get; }
 
         ISeguridadRepository SeguridadRepository { get; }
 

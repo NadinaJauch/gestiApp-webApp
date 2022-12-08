@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Abstractions.IRepositories
+namespace Abstractions.IServices
 {
-    public interface IUsuariosRepository : IRepository<Usuario>
+    public interface IUsuariosService
     {
-         Task<Usuario> ObtenerUsuarioPorId(int id);
+        public Task<Usuario> GetUserById(int Id);
     }
 }

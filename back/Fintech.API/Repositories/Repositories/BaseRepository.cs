@@ -11,12 +11,12 @@ namespace Repositories.Repositories
 {
     public class BaseRepository<T> : IRepository<T> where T : BaseEntity
     {
-        protected readonly DbSet<T> _entities;
         private readonly GestionAhorrosContext _db;
+        protected readonly DbSet<T> _entities;
 
         public BaseRepository(GestionAhorrosContext db)
         {
-            _db = db; 
+            _db = db;
             _entities = db.Set<T>();
         }
 
@@ -27,7 +27,7 @@ namespace Repositories.Repositories
 
         public async Task<T> GetById(int id)
         {
-            return await _entities.FindAsync(id);
+            return await _entities.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task Add(T entity)

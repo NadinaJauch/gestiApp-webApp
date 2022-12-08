@@ -47,27 +47,32 @@ namespace Services
         public async Task<string> LoginAsync(SeguridadDto loginDto)
         {
            var user =  await _unitOfWork.SeguridadRepository.getUserWithMail(loginDto.Mail);
+            if (user == null)
+            {
+                return "";
+            }
             if ((user.Mail.ToLower() == loginDto.Mail.ToLower()) && (user.Password == loginDto.Password))
             {
-                var authClaims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.Mail),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
-                var authSigninKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["JWT:Secret"]));
+                var claims = new[]
+                {
+                    new Claim(ClaimTypes.Name, user.Mail),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
 
                 var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
+                    claims,
                     expires: DateTime.Now.AddDays(1),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigninKey, SecurityAlgorithms.HmacSha256Signature)
-                    );
+                    signingCredentials: new SigningCredentials(
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"])), 
+                        SecurityAlgorithms.HmacSha256)
+                );
 
                 return new JwtSecurityTokenHandler().WriteToken(token);
             }
-
-            return null;
+            return "";
         }
 
         public async Task RegisterUser(UsuarioRegisterDTO usuarioDTO)
