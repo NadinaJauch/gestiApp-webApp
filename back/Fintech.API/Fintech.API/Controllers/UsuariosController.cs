@@ -19,7 +19,7 @@ namespace Fintech.API.Controllers
             _usuariosService = usuariosService;
         }
 
-        [HttpGet("identity")]
+        [HttpGet("getUsuario")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult identityEndpoint()
         {

@@ -10,7 +10,7 @@ namespace Fintech.API.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("security")]
     public class SeguridadController : ControllerBase
     {
         private readonly IMapper _mapper;
