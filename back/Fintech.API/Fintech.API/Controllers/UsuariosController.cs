@@ -9,7 +9,7 @@ using System.Security.Claims;
 namespace Fintech.API.Controllers
 {
     [ApiController]
-    [Route("[controller]/")]
+    [Route("/")]
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuariosService _usuariosService;

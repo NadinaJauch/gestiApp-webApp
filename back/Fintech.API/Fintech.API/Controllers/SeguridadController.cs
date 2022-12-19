@@ -51,7 +51,7 @@ namespace Fintech.API.Controllers
             {
                 return Unauthorized();
             }
-            return Ok(resultado);
+            return Ok(resultado); 
         }
 
     }

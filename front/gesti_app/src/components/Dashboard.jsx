@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
 import logo from '../images/Logo-GA.png'
 import DashboardHeader from './DashboardHeader copy';
 import DashboardReport from './DashboardReport';
@@ -7,7 +6,7 @@ import LayoutsSidebar from './LayoutsSidebar';
 import PageFooter from './PageFooter';
 
 
-class LoginForm extends React.Component{
+class Dashboard extends React.Component{
 
 render(){
     return (
@@ -41,4 +40,4 @@ render(){
     );
 }
 }
-export default LoginForm;
+export default Dashboard;

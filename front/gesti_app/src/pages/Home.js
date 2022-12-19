@@ -1,14 +1,19 @@
 import React from 'react';
 import PageFooter from '../components/PageFooter';
-import MainDashboard from '../components/Dashboard';
-
+import Dashboard from '../components/Dashboard';
+import { cleanLocalStorage, getUser, isLoggedIn } from '../services/localStorageService'
 
 const Home = () => {
-  return (
-    <>
-      <MainDashboard />
-    </>
-  );
+
+  if (isLoggedIn()) {
+    return (
+      <>
+        <Dashboard />
+      </>
+    );
+  };
+  cleanLocalStorage()
+  window.location.href = "/index"
 }
 
 export default Home;

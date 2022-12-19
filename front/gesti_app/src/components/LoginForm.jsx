@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 //servicio
 import {ApiURL} from '../services/apiRest.js'
 //librerias
+import {setUserInLocalStorage,  cleanLocalStorage
+, getTheLoginResponse} from '../services/localStorageService.js'
 
 class LoginForm extends React.Component {
     state={
@@ -13,7 +15,7 @@ class LoginForm extends React.Component {
         error:false,
         errorMsg:""
     }
-
+    
     controlFormSubmit =e=>{
         e.preventDefault();
     }
@@ -28,34 +30,25 @@ class LoginForm extends React.Component {
         console.log(this.state.form)
     }
 
-    //submit
-    controlSubmit = async () =>{
-        const api = "http://localhost:5174/security/login"
-        const request = {
-        headers:{'Content-Type': 'application/json'},
-        method: "POST",
-        body: JSON.stringify(this.state.form)}
-        
-        var response = await fetch(api,request).then( res  => {
-        return res;
-        }).catch(error =>{
-            return error
-        });
-
-        if (response.status === 200)
-        {
-            var token = await response.json()
-            const redirectHome = () => {
-            window.location.href = '/home'
-        }
-        redirectHome()
-        } 
-        else if (response.status === 401)
-        {
-            this.setState(state =>({
-            respuesta: "Credenciales incorrectas" }))
-        }
+   logIn = async () =>{
+    const response = await getTheLoginResponse(this.state.form);
+    const token = await response.json();
+    if (response.status === 200) {
+        window.localStorage.setItem('secure-gestiApp', token);
+        setUserInLocalStorage();
+        console.log("se realizó el fetch y se guardó el token en local storage")
+       window.location.href = "/home/"
     }
+    else if (response.status === 401) {
+        cleanLocalStorage()
+        this.setState(state => ({
+            respuesta: "Credenciales incorrectas"
+        }))
+    }
+
+    return 
+    }
+
 
 render(){
     return(
@@ -78,14 +71,13 @@ render(){
             <div className="text-center pt-1 mb-5 pb-1">
 
                 {/* SUBMIT  */}
-                <input className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" id="idSubmit" value="Entrar" onClick={this.controlSubmit}/>
-
+                <input className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit" id="idSubmit" value="Entrar" onClick={this.logIn}/>
 
                 <a className="text-muted d-block" href="#!">Olvidaste tu contraseña?</a>
             </div>
             <div className="d-flex align-items-center justify-content-center pb-4">
                 <p className="mb-0 me-2">No estás registrado?</p>
-                <Link to="/login"><button type="button" className="btn btn-outline-danger">Registrarse</button></Link>
+                <button type="button" className="btn btn-outline-danger">Registrarse</button>
             </div>
  </form >
        
